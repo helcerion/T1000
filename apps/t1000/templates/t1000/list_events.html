@@ -1,0 +1,19 @@
+{% extends 't1000/base.html' %}
+{% block content %}
+<main>
+    <div class="container">
+    {% for date,event in events.items %}
+        <div class="row">
+            <div class="col-2">
+                {{ date }}
+            </div>
+            {% for data in event %}
+                <div class="col-2">
+                    {{ data.time }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
+</main>
+{% endblock content %}
