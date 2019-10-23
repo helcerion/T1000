@@ -1,4 +1,4 @@
-class CommandInterface(object):
+class CommandInterface():
     def __init__(self, repository):
         self._repo = repository
 
@@ -6,7 +6,7 @@ class CommandInterface(object):
         return self
 
     def execute(self):
-        raise Exception(\
-                'You need to implement execute function from %s.' % \
-                (self.__class__.__name__)\
+        raise Exception(
+                'You need to implement execute function from %s.' %
+                (self.__class__.__name__)
             )

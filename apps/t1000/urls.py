@@ -1,7 +1,7 @@
-from django.urls import re_path, path
+from django.urls import re_path
 
 from src.t1000.application.dependency_injection.result_factory import EventsResultFactory
-from .views import *
+from .views import EventsView
 
 app_name = 't1000'
 urlpatterns = [
@@ -15,4 +15,3 @@ urlpatterns = [
         template_name='t1000/list_events.html'\
     ), name='events_this_month'),
 ]
-

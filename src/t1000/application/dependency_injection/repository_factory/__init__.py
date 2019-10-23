@@ -8,10 +8,13 @@ def get(persistence: Persistence) -> Repository:
 from ..persistence_factory import EventsPersistenceFactory
 from ....domain.repository import EventsRepo
 
-class EventsRepositoryFactory(object):
+
+class EventsRepositoryFactory():
     @staticmethod
     def create(entity, persistence_type):
-        persistence = EventsPersistenceFactory.create(persitence_type=persistence_type)
+        persistence = EventsPersistenceFactory.create(
+                persitence_type=persistence_type
+            )
 
         if entity == 'Events':
             repository = EventsRepo(persistence=persistence)
@@ -19,4 +22,3 @@ class EventsRepositoryFactory(object):
             raise Exception('Repository from %s does not supported' % (entity))
 
         return repository
-        

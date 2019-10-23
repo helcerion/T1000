@@ -6,7 +6,8 @@ def get() -> Resource:
 '''
 from ...resource.events import EventsDetail
 
-class EventsResourceFactory(object):
+
+class EventsResourceFactory():
     @staticmethod
     def create(view):
         if view == 'events_detail':

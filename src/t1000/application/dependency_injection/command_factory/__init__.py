@@ -8,7 +8,8 @@ def get(repository: Repository) -> Command:
 from ..repository_factory import EventsRepositoryFactory
 from ...command.events import GetEventsFromToday, GetEventsFromThisMonth
 
-class EventsCommandFactory(object):
+
+class EventsCommandFactory():
     @staticmethod
     def create(use_case, entity, persistence_type):
         repository = EventsRepositoryFactory.create(entity, persistence_type)

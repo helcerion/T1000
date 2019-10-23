@@ -1,8 +1,9 @@
 from datetime import datetime
 
-from ...domain.entity import Events, Event
+from ...domain.entity import Event, Events
 
-class EventsInMemoryRepo(object):
+
+class EventsInMemoryRepo():
     DATE_FORMAT = '%Y-%m-%d'
 
     def __init__(self):
@@ -17,43 +18,54 @@ class EventsInMemoryRepo(object):
             {'uuid': 'zxcv', 'date': '2019-10-16', 'time': '07:05:30'},
         ]
 
-    def getFromDate(self, date: str) -> Events:
+    def get_from_date(self, date: str) -> Events:
         events = []
         event_type = ('entrada', 'salida')
         event_num = 0
         last_event = None
 
-        for e in self._events:
-            if self.__get_date(e['date']) == self.__get_date(date):
-                if last_event is None or last_event != self.__get_day(e['date']):
+        for event in self._events:
+            if self.__get_date(event['date']) == self.__get_date(date):
+                if last_event is None or \
+                   last_event != self.__get_day(event['date']):
                     event_num = 0
 
-                event = Event(uuid=e['uuid'], date=e['date'], time=e['time'], \
-                    event_type=event_type[event_num%2])
+                event_entity = Event(
+                        uuid=event['uuid'],
+                        date=event['date'],
+                        time=event['time'],
+                        event_type=event_type[event_num % 2]
+                    )
                 event_num += 1
-                last_event = self.__get_day(event.date)
-                events.append(event)
+                last_event = self.__get_day(event_entity.date)
+                events.append(event_entity)
 
-        return Events(events) 
+        return Events(events)
 
-    def getFromInterval(self, init: str, end: str) -> Events:
+    def get_from_interval(self, init: str, end: str) -> Events:
         events = []
         event_type = ('entrada', 'salida')
         event_num = 0
         last_event = None
 
-        for e in self._events:
-            if self.__get_date(e['date']) >= self.__get_date(init) or self.__get_date(e['date']) <= self.__get_date(end):
-                if last_event is None or last_event != self.__get_day(e['date']):
+        for event in self._events:
+            if self.__get_date(event['date']) >= self.__get_date(init) or \
+               self.__get_date(event['date']) <= self.__get_date(end):
+                if last_event is None or \
+                   last_event != self.__get_day(event['date']):
                     event_num = 0
 
-                event = Event(uuid=e['uuid'], date=e['date'], time=e['time'], \
-                    event_type=event_type[event_num%2])
+                event_entity = Event(
+                        uuid=event['uuid'],
+                        date=event['date'],
+                        time=event['time'],
+                        event_type=event_type[event_num % 2]
+                    )
                 event_num += 1
-                last_event = self.__get_day(event.date)
-                events.append(event)
+                last_event = self.__get_day(event_entity.date)
+                events.append(event_entity)
 
-        return Events(events) 
+        return Events(events)
 
     @classmethod
     def __get_date(cls, date: str):
