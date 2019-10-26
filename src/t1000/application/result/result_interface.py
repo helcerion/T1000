@@ -4,14 +4,14 @@ from ..command import command_interface
 class ResultInterface():
     _command: command_interface.CommandInterface
 
-    def __init__(self, command: command_interface, resource):
+    def __init__(self, command: command_interface.CommandInterface, resource):
         self._command = command
         self._resource = resource
 
     def set_command(self, command: command_interface.CommandInterface):
         self._command = command
 
-    def set_reource(self, resource):
+    def set_resource(self, resource):
         self._resource = resource
 
     def get(self, *args, **kwargs):

@@ -23,4 +23,4 @@ class EventsRepo():
         return self._repo.get_from_interval(init=from_date, end=to_date)
 
     def all(self):
-        pass
+        return self._repo.find_all()

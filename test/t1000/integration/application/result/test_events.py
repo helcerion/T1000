@@ -38,6 +38,20 @@ class ConsoleEventsResultTestCase(unittest.TestCase):
                            {'event_type': 'entrada', 'time': '10:05:30'}],
             '2019-10-16': [{'event_type': 'entrada', 'time': '07:05:30'}]
         }, 0))
+    
+    def test_with_command_get_events_from_today_setting_command_and_resource_after(self):
+        command = GetEventsFromToday(EventsRepo(EventsInMemoryRepo()))
+        console_events_result = ConsoleEventsResult(None, None)
+        console_events_result.set_command(command)
+        console_events_result.set_resource(self.resource)
+        console_events = console_events_result.get()
+        self.assertEqual(console_events, ({}, 0))
+    
+    def test_with_excetion(self):
+        console_events_result = ConsoleEventsResult(None, None)
+        console_events = console_events_result.get()
+        self.assertEqual(console_events, ({}, 1))
+
 
 class HtmlEventsResultTestCase(unittest.TestCase):
     def setUp(self):
@@ -69,3 +83,8 @@ class HtmlEventsResultTestCase(unittest.TestCase):
         html_events_result = HtmlEventsResult(command, self.resource)
         html_events = html_events_result.get()
         self.assertEqual(html_events, ({'events': resource_result}, 200))
+    
+    def test_with_exception(self):
+        html_events_result = HtmlEventsResult(None, None)
+        html_events = html_events_result.get()
+        self.assertEqual(html_events, ({}, 500))

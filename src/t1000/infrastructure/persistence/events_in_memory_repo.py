@@ -19,28 +19,7 @@ class EventsInMemoryRepo():
         ]
 
     def get_from_date(self, date: str) -> Events:
-        events = []
-        event_type = ('entrada', 'salida')
-        event_num = 0
-        last_event = None
-
-        for event in self._events:
-            if self.__get_date(event['date']) == self.__get_date(date):
-                if last_event is None or \
-                   last_event != self.__get_day(event['date']):
-                    event_num = 0
-
-                event_entity = Event(
-                        uuid=event['uuid'],
-                        date=event['date'],
-                        time=event['time'],
-                        event_type=event_type[event_num % 2]
-                    )
-                event_num += 1
-                last_event = self.__get_day(event_entity.date)
-                events.append(event_entity)
-
-        return Events(events)
+        return self.get_from_interval(date, date)
 
     def get_from_interval(self, init: str, end: str) -> Events:
         events = []
@@ -49,7 +28,7 @@ class EventsInMemoryRepo():
         last_event = None
 
         for event in self._events:
-            if self.__get_date(event['date']) >= self.__get_date(init) or \
+            if self.__get_date(event['date']) >= self.__get_date(init) and \
                self.__get_date(event['date']) <= self.__get_date(end):
                 if last_event is None or \
                    last_event != self.__get_day(event['date']):
@@ -62,8 +41,31 @@ class EventsInMemoryRepo():
                         event_type=event_type[event_num % 2]
                     )
                 event_num += 1
-                last_event = self.__get_day(event_entity.date)
+                last_event = self.__get_day(event['date'])
                 events.append(event_entity)
+
+        return Events(events)
+    
+    def find_all(self):
+        events = []
+        event_type = ('entrada', 'salida')
+        event_num = 0
+        last_event = None
+
+        for event in self._events:
+            if last_event is None or \
+                last_event != self.__get_day(event['date']):
+                event_num = 0
+
+            event_entity = Event(
+                uuid=event['uuid'],
+                date=event['date'],
+                time=event['time'],
+                event_type=event_type[event_num % 2]
+            )
+            event_num += 1
+            last_event = self.__get_day(event_entity.date)
+            events.append(event_entity)
 
         return Events(events)
 

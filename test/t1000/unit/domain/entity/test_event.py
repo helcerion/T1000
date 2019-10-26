@@ -18,3 +18,7 @@ class EventTestCase(unittest.TestCase):
         event_entity_1 = Event('asdf', '2019-10-19', '07:05:00', 'entrada')
         event_entity_2 = Event('asdu', '2019-10-19', '07:05:00', 'entrada')
         self.assertNotEqual(event_entity_1, event_entity_2)
+    
+    def test_str(self):
+        event_entity = Event('asdf', '2019-10-19', '07:05:00', 'entrada')
+        self.assertEqual(str(event_entity), 'asdf 2019-10-19 07:05:00 entrada')
