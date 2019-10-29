@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from ..entity import Events
+from ..entity import Event, Events
 
 
 class EventsRepo():
@@ -24,3 +24,6 @@ class EventsRepo():
 
     def all(self):
         return self._repo.find_all()
+
+    def save(self, event: Event):
+        return self._repo.save(event)

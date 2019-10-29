@@ -19,17 +19,34 @@ class EventsInMemoryRepo():
         ]
 
     def get_from_date(self, date: str) -> Events:
-        return self.get_from_interval(date, date)
+        return self.__find(init=date, end=date)
 
-    def get_from_interval(self, init: str, end: str) -> Events:
+    def get_from_interval(self, init: str = '', end: str = '') -> Events:
+        init = None if init == '' else init
+        end = None if end == '' else end
+
+        return self.__find(init=init, end=end)
+    
+    def find_all(self):
+        return self.__find(all=True)
+
+    def save(self, event: Event):
+        self._events.append(
+            {'uuid': event.uuid, 'date': event.date, 'time': event.time}
+        )
+
+        return True
+
+    def __find(self, init: str=None, end: str=None, all: bool=False):
         events = []
         event_type = ('entrada', 'salida')
         event_num = 0
         last_event = None
 
         for event in self._events:
-            if self.__get_date(event['date']) >= self.__get_date(init) and \
-               self.__get_date(event['date']) <= self.__get_date(end):
+            if self.__date_between_dates(init, end, event['date']) or \
+                self.__date_before(init, end, event['date']) or \
+                self.__date_after(init, end, event['date']) or all is True:
                 if last_event is None or \
                    last_event != self.__get_day(event['date']):
                     event_num = 0
@@ -45,29 +62,37 @@ class EventsInMemoryRepo():
                 events.append(event_entity)
 
         return Events(events)
-    
-    def find_all(self):
-        events = []
-        event_type = ('entrada', 'salida')
-        event_num = 0
-        last_event = None
 
-        for event in self._events:
-            if last_event is None or \
-                last_event != self.__get_day(event['date']):
-                event_num = 0
+    @classmethod
+    def __date_between_dates(cls, init: str, end: str, date: str):
+        date_between_dates = False
+        
+        if init is not None and end is not None and \
+            cls.__get_date(date) >= cls.__get_date(init)\
+            and cls.__get_date(date) <= cls.__get_date(end):
+            date_between_dates = True
 
-            event_entity = Event(
-                uuid=event['uuid'],
-                date=event['date'],
-                time=event['time'],
-                event_type=event_type[event_num % 2]
-            )
-            event_num += 1
-            last_event = self.__get_day(event_entity.date)
-            events.append(event_entity)
+        return date_between_dates
 
-        return Events(events)
+    @classmethod
+    def __date_before(cls, init: str, end: str, date: str):
+        date_before = False
+
+        if init is None and end is not None and \
+            cls.__get_date(date) <= cls.__get_date(end):
+            date_before = True
+        
+        return date_before
+
+    @classmethod
+    def __date_after(cls, init: str, end: str, date: str):
+        date_after = False
+
+        if init is not None and end is None and \
+            cls.__get_date(date) >= cls.__get_date(init):
+            date_after = True
+        
+        return date_after
 
     @classmethod
     def __get_date(cls, date: str):

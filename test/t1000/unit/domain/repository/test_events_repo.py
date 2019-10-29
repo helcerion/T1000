@@ -35,3 +35,21 @@ class EventsRepoTestCase(unittest.TestCase):
         events_repo = EventsRepo(persistence=persistence_mock)
         events_repo.all()
         persistence_mock.find_all.assert_called_once()
+
+    def test_save(self):
+        persistence_mock = Mock()
+        event_mock = Mock()
+        persistence_mock.save.return_value = True
+        events_repo = EventsRepo(persistence=persistence_mock)
+        saved = events_repo.save(event_mock)
+        persistence_mock.save.assert_called_once_with(event_mock)
+        self.assertTrue(saved)
+
+    def test_save_with_error(self):
+        persistence_mock = Mock()
+        event_mock = Mock()
+        persistence_mock.save.return_value = False
+        events_repo = EventsRepo(persistence=persistence_mock)
+        saved = events_repo.save(event_mock)
+        persistence_mock.save.assert_called_once_with(event_mock)
+        self.assertFalse(saved)

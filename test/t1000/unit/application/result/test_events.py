@@ -15,7 +15,7 @@ class ConsoleEventsResultTestCase(unittest.TestCase):
     def test_get_result_no_command_no_resource(self):
         console_event_result = ConsoleEventsResult(None, None)
         console_event = console_event_result.get()
-        self.assertEqual(console_event, ({}, 1))
+        self.assertEqual(console_event, ({'message': 'Result needs a command.'}, 1))
 
     def test_get_result_setting_resource_after_and_no_command(self):
         resource_mock = Mock()
@@ -23,7 +23,7 @@ class ConsoleEventsResultTestCase(unittest.TestCase):
         console_event_result = ConsoleEventsResult(None, None)
         console_event_result.set_resource(resource_mock)
         console_event = console_event_result.get()
-        self.assertEqual(console_event, ({}, 1))
+        self.assertEqual(console_event, ({'message': 'Result needs a command.'}, 1))
 
     def test_get_result_ok_setting_resource_after(self):
         resource = Mock()
@@ -48,7 +48,19 @@ class ConsoleEventsResultTestCase(unittest.TestCase):
         command.set_params.return_value = command
         console_event_result = ConsoleEventsResult(command, Mock())
         console_event = console_event_result.get()
-        self.assertEqual(console_event, ({}, 1))
+        self.assertEqual(console_event, ({'message': 'Nooooooo'}, 1))
+
+    def test_with_exception_no_command(self):
+        console_event_result = ConsoleEventsResult(None, None)
+        console_event_result.set_resource(Mock())
+        console_event = console_event_result.get()
+        self.assertEqual(console_event, ({'message': 'Result needs a command.'}, 1))
+
+    def test_with_exception_no_resource(self):
+        console_event_result = ConsoleEventsResult(None, None)
+        console_event_result.set_command(Mock())
+        console_event = console_event_result.get()
+        self.assertEqual(console_event, ({'message': 'Result needs resource.'}, 1))
 
 class HtmlEventResultTestCase(unittest.TestCase):
     def test_get_result_ok(self):

@@ -11,7 +11,7 @@ class EventsResourceFactory():
     @staticmethod
     def create(view):
         if view == 'events_detail':
-            resource = EventsDetail
+            resource = EventsDetail()
         else:
             raise Exception('View %s does not supported' % (view))
 

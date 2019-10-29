@@ -1,5 +1,6 @@
 .vscode
 .rsyncignore
+.DS_Store
 
 ### Django ###
 *.log

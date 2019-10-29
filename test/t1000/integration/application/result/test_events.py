@@ -47,10 +47,17 @@ class ConsoleEventsResultTestCase(unittest.TestCase):
         console_events = console_events_result.get()
         self.assertEqual(console_events, ({}, 0))
     
-    def test_with_excetion(self):
+    def test_with_exception_no_command(self):
         console_events_result = ConsoleEventsResult(None, None)
         console_events = console_events_result.get()
-        self.assertEqual(console_events, ({}, 1))
+        self.assertEqual(console_events, ({'message': 'Result needs a command.'}, 1))
+
+    def test_with_exception_no_resource(self):
+        command = GetEventsFromToday(EventsRepo(EventsInMemoryRepo()))
+        console_events_result = ConsoleEventsResult(None, None)
+        console_events_result.set_command(command)
+        console_events = console_events_result.get()
+        self.assertEqual(console_events, ({'message': 'Result needs resource.'}, 1))
 
 
 class HtmlEventsResultTestCase(unittest.TestCase):
