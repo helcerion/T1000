@@ -28,3 +28,7 @@ class GetEventsFromTodayTestCase(unittest.TestCase):
 
     def test_execute(self):
         self.assertEqual(self._command.execute(), Events([]))
+
+    def test_set_params_return_self(self):
+        command_result = self._command.set_params()
+        self.assertEqual(command_result, self._command)

@@ -9,11 +9,11 @@ from ....infrastructure.persistence import EventsInMemoryRepo
 
 class EventsPersistenceFactory():
     @staticmethod
-    def create(persitence_type):
-        if persitence_type == 'in_memory':
+    def create(persistence_type):
+        if persistence_type == 'in_memory':
             persistence = EventsInMemoryRepo()
         else:
             raise Exception('Persistence type %s does not supported' %
-                            (persitence_type))
+                            (persistence_type))
 
         return persistence

@@ -1,9 +1,9 @@
 import unittest
 from unittest.mock import Mock
 
-from src.t1000.application.result.result_interface import ResultInterface
+from src.t1000.application.result.result_abstract import ResultAbstract
 
-class ResultInterfaceTestCase(unittest.TestCase):
+class ResultAbstractTestCase(unittest.TestCase):
     def setUp(self):
         return super().setUp()
 
@@ -18,5 +18,5 @@ class ResultInterfaceTestCase(unittest.TestCase):
         self.assertEqual(str(result_interface_exception.exception), \
             'You need to implement get function from ResultNoGet.')
 
-class ResultNoGet(ResultInterface):
+class ResultNoGet(ResultAbstract):
     pass

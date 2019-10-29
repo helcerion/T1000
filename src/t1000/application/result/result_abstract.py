@@ -1,14 +1,14 @@
-from ..command import command_interface
+from ..command import command_abstract
 
 
-class ResultInterface():
-    _command: command_interface.CommandInterface
+class ResultAbstract():
+    _command: command_abstract.CommandAbstract
 
-    def __init__(self, command: command_interface.CommandInterface, resource):
+    def __init__(self, command: command_abstract.CommandAbstract, resource):
         self._command = command
         self._resource = resource
 
-    def set_command(self, command: command_interface.CommandInterface):
+    def set_command(self, command: command_abstract.CommandAbstract):
         self._command = command
 
     def set_resource(self, resource):

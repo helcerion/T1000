@@ -1,4 +1,4 @@
-class CommandInterface():
+class CommandAbstract():
     def __init__(self, repository):
         self._repo = repository
 

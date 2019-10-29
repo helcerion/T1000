@@ -1,7 +1,7 @@
-from . import result_interface
+from . import result_abstract
 
 
-class ConsoleEventsResult(result_interface.ResultInterface):
+class ConsoleEventsResult(result_abstract.ResultAbstract):
     def get(self, *args, **kwargs):
         try:
             if self._command is None:
@@ -21,7 +21,7 @@ class ConsoleEventsResult(result_interface.ResultInterface):
         return body, code
 
 
-class HtmlEventsResult(result_interface.ResultInterface):
+class HtmlEventsResult(result_abstract.ResultAbstract):
     def get(self, *args, **kwargs):
         try:
             events = self._command.set_params(*args, **kwargs).execute()

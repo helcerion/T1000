@@ -13,7 +13,7 @@ class EventsRepositoryFactory():
     @staticmethod
     def create(entity, persistence_type):
         persistence = EventsPersistenceFactory.create(
-                persitence_type=persistence_type
+                persistence_type=persistence_type
             )
 
         if entity == 'Events':

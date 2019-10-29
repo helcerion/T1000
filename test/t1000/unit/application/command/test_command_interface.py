@@ -1,10 +1,10 @@
 import unittest
 from unittest.mock import Mock
 
-from src.t1000.application.command.command_interface import CommandInterface
+from src.t1000.application.command.command_abstract import CommandAbstract
 
 
-class CommandInterfaceTestCase(unittest.TestCase):
+class CommandAbstractTestCase(unittest.TestCase):
     def setUp(self):
         return super().setUp()
 
@@ -13,16 +13,12 @@ class CommandInterfaceTestCase(unittest.TestCase):
 
     def test_implements_without_implement_execute_method(self):
         command_no_execute = CommandNoExecute(Mock)
-        with self.assertRaises(Exception) as command_interface_execption:
+        with self.assertRaises(Exception) as command_abstract_execption:
             command_no_execute.execute()
 
-        self.assertEqual(str(command_interface_execption.exception), \
+        self.assertEqual(str(command_abstract_execption.exception), \
             'You need to implement execute function from CommandNoExecute.')
 
-    def test_set_params_return_it_self(self):
-        command_no_execute = CommandNoExecute(Mock)
-        command_returned = command_no_execute.set_params()
-        self.assertEqual(command_no_execute, command_returned)
 
-class CommandNoExecute(CommandInterface):
+class CommandNoExecute(CommandAbstract):
     pass
