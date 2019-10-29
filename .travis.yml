@@ -7,3 +7,4 @@ script:
   - pip install codecov
   - codecov --token=948898dc-2ad8-4221-8e76-402cdf6c1e26
   - coverage run -m unittest discover -s ./test
+  - coverage report -m
